@@ -33,15 +33,9 @@ public class App {
 		 * Boucle de choix Choix 1 à 4 1 Liste les pizzas 2 Ajout d'une pizza 3 mettre à
 		 * jour une pizza 4 Supprimer une pizza 99 Sortir de la boucle
 		 */
+
 		while (choix >= 1 && choix <= 4) {
-			System.out.println();
-			System.out.println("***** Pizzeria Administration *****");
-			System.out.println("1. \t Lister les pizzas");
-			System.out.println("2. \t Ajouter une nouvelle pizza");
-			System.out.println("3. \t Mettre à jour une pizza");
-			System.out.println("4. \t Supprimer une pizza");
-			System.out.println("99. \t Sortir");
-			System.out.println();
+			System.out.println(Pizza.settingMenu());
 			choix = sc.nextInt();
 
 			if (choix == 1) {
@@ -84,15 +78,13 @@ public class App {
 				System.out.println("Veuillez saidir le nouveau prix");
 				double prix = sc.nextDouble();
 				sc.nextLine();
-				int id = 0;
 				for (Pizza pizza : pizzas) {
 					if (code.equals(pizza.getCode())) {
-						id = pizza.getId();
+						pizza.setCode(newcode);
+						pizza.setDesignation(nom);
+						pizza.setPrix(prix);
 					}
 				}
-				pizzas[id].setCode(newcode);
-				pizzas[id].setDesignation(nom);
-				pizzas[id].setPrix(prix);
 			}
 
 			else if (choix == 4) {
