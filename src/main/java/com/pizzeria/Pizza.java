@@ -1,5 +1,7 @@
 package com.pizzeria;
 
+
+
 /**
  * Initialisation des attributs de la class pizza.
  * 
@@ -8,10 +10,12 @@ package com.pizzeria;
  */
 public class Pizza {
 	int id;
-	String code;
+	 String code;
 	String designation;
 	double prix;
 	static int count;
+	static Pizza[] pizzas;
+	static int tabLength = 8;
 
 	/**
 	 * Constructeur
@@ -26,7 +30,8 @@ public class Pizza {
 		this.designation = designation;
 		this.prix = prix;
 	}
-
+	
+	
 	/**
 	 * Getter et setter de la class pizza
 	 * 
