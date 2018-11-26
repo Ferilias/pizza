@@ -1,28 +1,47 @@
 package com.pizzeria;
 
+import java.util.Collections;
 import java.util.Scanner;
+
 import com.pizzeria.Pizza;
+import com.pizzeria.CodeComparator;
+import com.pizzeria.PrixComparator;
 
-/**
- * Hello world!
- *
- */
-public class Main {
+import exception.DeletePizzaException;
+import exception.SavePizzaException;
+import exception.UpdatePizzaException;
+
+
+public class PizzeriaAdminConsoleApp {
+	
 	public static void main(String[] args) {
-
+		
+		boolean enter = true;
 		PizzaMemDao dao = new PizzaMemDao();
 		
+		
 		Scanner sc = new Scanner(System.in);
-		int choix =1;
+		System.out.println("Veuillez trier la liste");
+		int choix = sc.nextInt();
 		
+		if (choix == 1) {
+			
+			Collections.sort(dao.findAllPizzas(),new CodeComparator());
+		}
 		
-		while (choix >= 1 && choix <= 4) {
+		else {
+			Collections.sort(dao.findAllPizzas(),new PrixComparator());
+		}
+		dao.findAllPizzas();
+		
+		while (enter) {
 			
 			System.out.println(Pizza.settingMenu());
 			choix = sc.nextInt();
 
 			if (choix == 1) {
-				dao.findAllPizzas();;	}
+				dao.findAllPizzas();	
+				}
 		
 			
 			else if (choix == 2) {
@@ -34,7 +53,12 @@ public class Main {
 				String nom = sc.nextLine();
 				System.out.println("Veuillez saisir le prix : ");
 				int prix = sc.nextInt();
-				dao.addPizza(new Pizza(code, nom, prix));
+				try {
+					dao.addPizza(new Pizza(code, nom, prix));
+				} catch (SavePizzaException e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				}
 			}
 
 			else if (choix == 3) {
@@ -42,19 +66,20 @@ public class Main {
 				System.out.println("Veuillez saisir le code de la pizza à modifier.");
 				sc.nextLine();
 				String code = sc.nextLine();
-				System.err.println(code);
 				System.out.println("Veuillez saisir le nouveau code");
 				String newcode = sc.nextLine();
-				System.err.println(newcode);
 				System.out.println("Veuillez saidir le nouveau nom");
 				String nom = sc.nextLine();
-				System.err.println(nom);
 				System.out.println("Veuillez saidir le nouveau prix");
 				double prix = sc.nextDouble();
-				System.err.println(prix);
 				sc.nextLine();				
 				Pizza PizzaAUpdate = new Pizza (newcode, nom, prix);
-				dao.updatePizza(code, PizzaAUpdate);
+				try {
+					dao.updatePizza(code, PizzaAUpdate);
+				} catch (UpdatePizzaException e) {
+					System.out.println(e.getMessage());					
+					e.printStackTrace();
+				}
 					}
 			
 			else if (choix == 4) {
@@ -62,7 +87,15 @@ public class Main {
 				System.out.println("Veuillez saisir le code de la pizza à supprimer.");
 				sc.nextLine();
 				String code = sc.nextLine();
-				dao.deletePizza(code);
+				try {
+					dao.deletePizza(code);
+				} catch (DeletePizzaException e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				}
+			}
+			else if (choix == 99) {
+				enter = false;
 			}
 		}
 		dao.findAllPizzas();

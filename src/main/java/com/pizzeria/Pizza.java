@@ -10,12 +10,10 @@ package com.pizzeria;
  */
 public class Pizza {
 	int id;
-	 String code;
+	String code;
 	String designation;
 	double prix;
 	static int count;
-	static Pizza[] pizzas;
-	static int tabLength = 8;
 
 	/**
 	 * Constructeur
@@ -53,7 +51,7 @@ public class Pizza {
 		this.designation = designation;
 	}
 
-	public double getPrix() {
+	public Double getPrix() {
 		return prix;
 	}
 
