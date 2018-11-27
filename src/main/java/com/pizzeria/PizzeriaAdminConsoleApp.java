@@ -10,6 +10,7 @@ import com.pizzeria.PrixComparator;
 import exception.DeletePizzaException;
 import exception.SavePizzaException;
 import exception.UpdatePizzaException;
+import model.CategoriePizzaEnum;
 
 
 public class PizzeriaAdminConsoleApp {
@@ -53,11 +54,14 @@ public class PizzeriaAdminConsoleApp {
 				String nom = sc.nextLine();
 				System.out.println("Veuillez saisir le prix : ");
 				int prix = sc.nextInt();
+				sc.nextLine();
+				System.out.println(CategoriePizzaEnum.toStringAll());
+				System.out.println("Veuillez saisir la catégorie");
+				String cat = sc.nextLine().toUpperCase();
 				try {
-					dao.addPizza(new Pizza(code, nom, prix));
+					dao.addPizza(new Pizza(code, nom, prix, CategoriePizzaEnum.valueOf(cat)));
 				} catch (SavePizzaException e) {
 					System.out.println(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 
@@ -68,17 +72,19 @@ public class PizzeriaAdminConsoleApp {
 				String code = sc.nextLine();
 				System.out.println("Veuillez saisir le nouveau code");
 				String newcode = sc.nextLine();
-				System.out.println("Veuillez saidir le nouveau nom");
+				System.out.println("Veuillez saisir le nouveau nom");
 				String nom = sc.nextLine();
-				System.out.println("Veuillez saidir le nouveau prix");
+				System.out.println("Veuillez saisir le nouveau prix");
 				double prix = sc.nextDouble();
-				sc.nextLine();				
-				Pizza PizzaAUpdate = new Pizza (newcode, nom, prix);
+				sc.nextLine();	
+				System.out.println(CategoriePizzaEnum.toStringAll());
+				System.out.println("Veuillez saisir la catégorie");
+				String cat = sc.nextLine().toUpperCase();
+				Pizza PizzaAUpdate = new Pizza (newcode, nom, prix, CategoriePizzaEnum.valueOf(cat));
 				try {
 					dao.updatePizza(code, PizzaAUpdate);
 				} catch (UpdatePizzaException e) {
 					System.out.println(e.getMessage());					
-					e.printStackTrace();
 				}
 					}
 			
@@ -91,7 +97,6 @@ public class PizzeriaAdminConsoleApp {
 					dao.deletePizza(code);
 				} catch (DeletePizzaException e) {
 					System.out.println(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 			else if (choix == 99) {
